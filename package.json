@@ -1,0 +1,27 @@
+{
+  "name": "spotify-mvc",
+  "version": "1.0.0",
+  "description": "API/Nodejs practice using spotify",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masakistewart/spotify-albums-and-tracks-server-side-remix.git"
+  },
+  "author": "Cairo Stewart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masakistewart/spotify-albums-and-tracks-server-side-remix/issues"
+  },
+  "homepage": "https://github.com/masakistewart/spotify-albums-and-tracks-server-side-remix#readme",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "prettyjson": "^1.1.3",
+    "request": "^2.67.0",
+    "serve-favicon": "^2.3.0"
+  }
+}
