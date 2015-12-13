@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% include ../partials/head %>
+</head>
+<body>
+	<% include ../partials/header %>
+	<div class="container">
+		<div class="jumbotron">
+		<center>
+			<h1>Artists</h1>
+			<table class="table">
+				<tr>
+					<th>Name</th>
+					<th>ID</th>
+					<th>Popularity</th>
+				</tr>
+				<tbody>
+					<% artists.forEach(function(artist) { %>
+						<tr>
+							<td><a href="albums/<%= artist.name %>/<%= artist.id %>"><p><%= artist.name %></p></a></td>
+							<td><p><%= artist.id %></p></td>
+							<td><p><%= artist.popularity %></p></td>
+						</tr>
+					<% }) %>
+				</tbody>
+			</table>
+		</center>
+		</div>
+	</div>
+	<% include ../partials/footer %>
+</body>
+</html>

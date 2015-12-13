@@ -2,7 +2,7 @@
   "name": "spotify-mvc",
   "version": "1.0.0",
   "description": "API/Nodejs practice using spotify",
-  "main": "server.js",
+  "main": "controller/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
