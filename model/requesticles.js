@@ -34,6 +34,13 @@ var requesticles = {
 			}
 			response.render('pages/albums', {albums: albumDataArr, artist: artist});
 		})
+	},
+	'albumsTracksSearch': function(req, res) {
+		var albumID = req.params.id;
+		requestMOD('https://api.spotify.com/v1/albums/' + albumID + '/tracks', function(err, res, body) {
+			var tracks = JSON.parse(body).items[0].name;
+			console.log(tracks);
+		})
 	}
 }
 

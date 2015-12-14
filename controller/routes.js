@@ -23,4 +23,8 @@ router.get('/albums/:name/:id',function(req,res) {
   requesticles.albumSearch(req, res);
  });
 
+router.get('/albums/:artist/:albums/:id',function(req,res) { 
+  requesticles.albumsTracksSearch(req, res);
+ });
+
 module.exports = router;
