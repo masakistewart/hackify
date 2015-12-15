@@ -14,13 +14,13 @@
 				<table class="table">
 					<tr>
 						<th>Name</th>
-						<th>ID</th>
 						<th>Popularity</th>
+						<th>Album Cover</th>
 					</tr>
 					<tbody>
 						<tr>
-							<td><a href="albums/<%= album.id %>"><p><%= album.name %></p></a></td>
-							<td><a href="tracks/<%= artist %>/<%= album.id %>"><p><%= album.id %></p></a></td>
+							<td><a href="<%= album.name %>/<%= album.id %>"><p><%= album.name %></p></a></td>
+							<td><p><%= album.type %></p></td>
 							<td><img style="height: 150px; width: 150px" class="img-rounded" src="<%= album.mainIMG %>" /></td>
 						</tr>
 					</tbody>

@@ -16,16 +16,16 @@ var requesticles = {
 		artist = request.params.name;
 		requestMOD('https://api.spotify.com/v1/artists/'+ artistID +'/albums?album_type=album', function(err, res, body) {
 			console.log('searching...');
-			var obj = {};
 			if(body) {
 				var b = JSON.parse(body);
 				var albumData = b.items;
 				var albumDataArr = [];
+				var obj = {};
 				if(albumData.length > 0) {
 					albumData.forEach(function(album) {
 						if(obj[album.name] === undefined) {
-							obj[album.name] = 0;
-							console.log(album.images)
+							obj[album.name] = album.images[0].url;
+							console.log(album)
 							album.mainIMG = album.images[0].url;
 							albumDataArr.push(album);
 						}
@@ -37,9 +37,18 @@ var requesticles = {
 	},
 	'albumsTracksSearch': function(req, res) {
 		var albumID = req.params.id;
-		requestMOD('https://api.spotify.com/v1/albums/' + albumID + '/tracks', function(err, res, body) {
-			var tracks = JSON.parse(body).items[0].name;
-			console.log(tracks);
+		var tracks = null;
+		var	artist = req.params.artist;
+		var preAlbum = req.params.albums;
+		var album = preAlbum.replace(/'%20'/g, ' ');
+		requestMOD('https://api.spotify.com/v1/albums/' + albumID + '/tracks', function(err, resp, body) {
+			console.log(body);
+			tracks = JSON.parse(body).items;
+			requestMOD('https://api.spotify.com/v1/albums/' + albumID, function(err2, resp2, body2) {
+				var releaseDate = JSON.parse(body2).release_date;
+					var image = JSON.parse(body2).images[0].url;
+				res.render('pages/tracks', {artist: artist, tracks: tracks, album: album, release_date: releaseDate, image: image});
+			})
 		})
 	}
 }
