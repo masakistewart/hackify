@@ -3,12 +3,11 @@
 <head>
 	<% include ../partials/head %>
 	<style type="text/css">
-	body {
-		background: url('<%= image %>');
-		background-size: cover;
-	}
 	.jumbotron {
-		background: rgba(255, 255, 255, .85);
+		background: rgba(255, 255, 255, .65);
+	}
+	img {
+		height: 120px;
 	}
 	</style>
 </head>
@@ -17,17 +16,16 @@
 	<div class="container">
 		<div class="jumbotron">
 		<h1 class="text-center"><%= artist %></h1>
-			<legend><h3 class="text-danger"><%= album %> | <%= release_date %></h3></legend>
+			<div class="row">
+				<legend class="col-md-8"><h3 class="text-danger"><%= album %> | <%= release_date %></h3></legend>
+				<div class="col-md-4"><img src="<%= image %>"></div>
+			</div>
 			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th></th>
-					</tr>
-				</thead>
 				<tbody>
+					<th>Track Name</th>
 					<% tracks.forEach(function(track) { %>
 						<tr>
-							<td><p><a target="_blank" href="<%= track.preview_url %>"><%= track.name %></a></p></td>
+							<td><h5><a target="_blank" href="<%= track.preview_url %>"><%= track.name %></h5></p></td>
 						</tr>
 					<% }) %>
 				</tbody>

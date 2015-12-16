@@ -2,6 +2,32 @@
 <html>
 <head>
 	<% include ../partials/head %>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript">
+		<% var finale = []; %>
+		<% for (var i = 0; i < names.length; i++) { %>
+			<% var tmp = names[i].toString(); %>
+			<% finale.push(tmp); %>
+			<% console.log(finale); %>
+		<% }; %>
+
+		var data = {
+    		labels: <%=[ finale ]%>,
+		    datasets: [
+			    {
+		            label: "My First dataset",
+		            fillColor: "rgba(220,220,220,0.5)",
+		            strokeColor: "rgba(220,220,220,0.8)",
+		            highlightFill: "rgba(220,220,220,0.75)",
+		            highlightStroke: "rgba(220,220,220,1)",
+		            data: [<%= pop.toString() %>]
+	        	}
+    		]
+		}
+		var ctx = $("#myChart");
+		var myBarChart = new Chart(ctx).Bar(data);
+	</script>
 </head>
 <body>
 	<% include ../partials/header %>
@@ -27,6 +53,7 @@
 				</table>
 				<% }) %>
 			</center>
+			<canvas id="myChart" width="400px" height="400px"></canvas>
 			</div>
 		</div>
 
