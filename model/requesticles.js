@@ -4,11 +4,21 @@ var artistID,
 var requesticles = {
 	'initialSearch': function(search, res) {
 		var data;
-		requestMOD('https://api.spotify.com/v1/search?q=' + search + "&type=artist&limit=10", function(err, request, body) {
-			data = JSON.parse(body);
-			var data2 = data.artists.items;
-			res.render('pages/artists', {artists: data2});
-		});
+		if (search !== '') {
+			requestMOD('https://api.spotify.com/v1/search?q=' + search + "&type=artist&limit=20", function(err, request, body) {
+				data = JSON.parse(body);
+				console.log(data);
+				if(data.artists.items.length !== 0) {
+					var data2 = data.artists.items;
+					res.render('pages/artists', {artists: data2});
+				} else {
+					res.render('pages/fourohfour', {error: {status: 404, message: 'search was empty'}})
+				}
+			});
+		} else {
+			res.status(404);
+			res.render('pages/fourohfour', {error: {status: 404, message: 'search was empty'}})
+		}
 	},
 	'albumSearch': function(request, response) {
 		artistID = request.params.id;
@@ -17,28 +27,37 @@ var requesticles = {
 			console.log('searching...');
 			if(body) {
 				var b = JSON.parse(body);
-				var albumData = b.items;
-				var albumDataArr = [];
-				var obj = {};
-				var counter = 0;
-				var albumsPop = [];
-				var names = [];
+				albumData = b.items,
+				albumDataArr = [],
+				obj = {
+					names: [],
+					popularity: [],
+					albumCover: [],
+					id: []
+				},
+				counter = 0,
+				albumsPop = [],
+				names = [],
+				limiter = {};
 				if(albumData.length !== 0) {
 					albumData.forEach(function(album) {
-						if(obj[album.name] === undefined) {
+						if(limiter[album.name] === undefined) {
 							counter++;
-							names.push(album.name.toString());
-							obj[album.name] = album.images[0].url;
+							limiter[album.name] = 1;
+							obj.names.push(album.name);
+							obj['albumCover'].push(album.images[0].url);
+							obj.id.push(album.id);
 							album.mainIMG = album.images[0].url;
 							albumDataArr.push(album);
 							requestMOD('https://api.spotify.com/v1/albums/' + album.id, function(errp, resp, bodyp) {
 								if(bodyp) {
 									var popData = JSON.parse(bodyp).popularity;
 									albumsPop.push(popData);
+									obj.popularity.push(popData);
 								}
-								console.log(albumsPop)
+								console.log(obj);
 								if (albumsPop.length === counter) {
-									response.render('pages/albums', {albums: albumDataArr, artist: artist, pop: albumsPop, names: names});
+									response.render('pages/albums', {artist: artist, everything: obj});
 								}
 							})
 						}

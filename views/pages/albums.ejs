@@ -2,31 +2,32 @@
 <html>
 <head>
 	<% include ../partials/head %>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 	<script type="text/javascript">
-		<% var finale = []; %>
-		<% for (var i = 0; i < names.length; i++) { %>
-			<% var tmp = names[i].toString(); %>
-			<% finale.push(tmp); %>
-			<% console.log(finale); %>
-		<% }; %>
-
+	var pops = '<%= everything.popularity %>'.split(',');
+	window.onload = function() {
+		var arr = '<%= everything.names %>'.split(',');
+		for (var i = 0; i < pops.length; i++) {
+			pops[i] = parseInt(pops[i]);
+		};
 		var data = {
-    		labels: <%=[ finale ]%>,
+		    labels: arr,
 		    datasets: [
-			    {
+		        {
 		            label: "My First dataset",
-		            fillColor: "rgba(220,220,220,0.5)",
-		            strokeColor: "rgba(220,220,220,0.8)",
-		            highlightFill: "rgba(220,220,220,0.75)",
-		            highlightStroke: "rgba(220,220,220,1)",
-		            data: [<%= pop.toString() %>]
-	        	}
-    		]
-		}
-		var ctx = $("#myChart");
+		            fillColor: "rgba(221,72, 20,0.5)",
+		            strokeColor: "rgba(144,13,110,0.75)",
+		            highlightFill: "rgba(144,13,110,0.75)",
+		            highlightStroke: "rgba(221,72, 20,1)",
+		            data: pops
+		        }
+		    ]
+		};
+		console.log(document.getElementById('myChart'));
+		var ctx = $("#myChart").get(0).getContext("2d");
 		var myBarChart = new Chart(ctx).Bar(data);
+	}
 	</script>
 </head>
 <body>
@@ -36,7 +37,7 @@
 			<div class="jumbotron">
 			<center>
 				<h1><%= artist %>'s Albums</h1>
-				<% albums.forEach(function(album) { %>
+				<% for (var i = 0; i < everything.names.length; i++) { %>
 				<table class="table">
 					<tr>
 						<th>Name</th>
@@ -45,15 +46,15 @@
 					</tr>
 					<tbody>
 						<tr>
-							<td><a href="<%= album.name %>/<%= album.id %>"><p><%= album.name %></p></a></td>
-							<td><p><%= album.type %></p></td>
-							<td><img style="height: 150px; width: 150px" class="img-rounded" src="<%= album.mainIMG %>" /></td>
+							<td><a href="<%= everything.names[i] %>/<%= everything.id[i] %>"><p><%= everything.names[i] %></p></a></td>
+							<td><p><%= everything.popularity[i] %></p></td>
+							<td><img style="height: 150px; width: 150px" class="img-rounded" src="<%= everything.albumCover[i] %>" /></td>
 						</tr>
 					</tbody>
 				</table>
-				<% }) %>
+				<% } %>
 			</center>
-			<canvas id="myChart" width="400px" height="400px"></canvas>
+			<center><canvas id="myChart" width="900px" height="600px"></canvas></center>
 			</div>
 		</div>
 
